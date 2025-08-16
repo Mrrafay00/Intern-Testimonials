@@ -4,76 +4,74 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = document.querySelector('.prev');
     const nextBtn = document.querySelector('.next');
     const scrollTopBtn = document.getElementById('scroll-top');
-    
-    // Current testimonial index for slider
+
+    // Current index for slider
     let currentIndex = 0;
     const testimonialsCount = testimonialCards.length;
-    
+
     // Initialize slider
     function initSlider() {
         // Hide all testimonials initially
         testimonialCards.forEach(card => {
             card.style.display = 'none';
         });
-        
-        // Show first 3 testimonials (for desktop)
+        // Show first set based on screen size
         showTestimonials(currentIndex);
     }
-    
+
     // Show testimonials based on screen size
     function showTestimonials(startIndex) {
         const screenWidth = window.innerWidth;
         let cardsToShow = 3; // Default for desktop
-        
+
         if (screenWidth <= 1024 && screenWidth > 600) {
             cardsToShow = 2; // Tablet
         } else if (screenWidth <= 600) {
             cardsToShow = 1; // Mobile
         }
-        
+
         // Hide all cards
         testimonialCards.forEach(card => {
             card.style.display = 'none';
         });
-        
+
         // Show the appropriate cards
         for (let i = 0; i < cardsToShow; i++) {
             const index = (startIndex + i) % testimonialsCount;
             testimonialCards[index].style.display = 'block';
         }
     }
-    
-    // Next testimonial
+
+    // Next testimonials
     function nextTestimonial() {
         currentIndex = (currentIndex + 1) % testimonialsCount;
         showTestimonials(currentIndex);
     }
-    
-    // Previous testimonial
+
+    // Previous testimonials
     function prevTestimonial() {
         currentIndex = (currentIndex - 1 + testimonialsCount) % testimonialsCount;
         showTestimonials(currentIndex);
     }
-    
-    // Event listeners for navigation buttons
+
+    // Event listeners for navigation
     nextBtn.addEventListener('click', nextTestimonial);
     prevBtn.addEventListener('click', prevTestimonial);
-    
+
     // Auto-rotate testimonials every 5 seconds
     let autoRotate = setInterval(nextTestimonial, 5000);
-    
+
     // Pause auto-rotation on hover
     testimonialCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             clearInterval(autoRotate);
         });
-        
         card.addEventListener('mouseleave', () => {
             autoRotate = setInterval(nextTestimonial, 5000);
         });
     });
-    
-    // Scroll to top button
+
+    // Scroll to top button visibility
     window.addEventListener('scroll', function() {
         if (window.pageYOffset > 300) {
             scrollTopBtn.classList.add('visible');
@@ -81,21 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollTopBtn.classList.remove('visible');
         }
     });
-    
+
+    // Scroll to top on click
     scrollTopBtn.addEventListener('click', function() {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
-    
-    // Initialize the slider and handle window resize
+
+    // Initialize slider and resize handling
     initSlider();
     window.addEventListener('resize', function() {
         showTestimonials(currentIndex);
     });
-    
-    // Add animation to cards when they come into view
+
+    // Animate cards when in view
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -104,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { threshold: 0.1 });
-    
+
     testimonialCards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
