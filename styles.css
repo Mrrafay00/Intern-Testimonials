@@ -1,75 +1,62 @@
-/* Color Variables */
-:root {
-    --bg-color: #F5EEDC;
-    --card-color: #183B4E;
-    --text-light: #F5EEDC;
-    --accent-color: #DDA853;
-    --secondary-color: #27548A;
-}
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Basic Reset and Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--card-color);
-    line-height: 1.6;
-    padding: 2rem 1rem;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
 }
 
+/* Container */
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 }
 
 /* Header */
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 30px;
 }
 
 .header h1 {
-    font-size: 2.5rem;
-    color: var(--card-color);
-    margin-bottom: 0.5rem;
+    font-size: 2.5em;
+    margin-bottom: 10px;
 }
 
 .header p {
-    font-size: 1.1rem;
-    color: var(--secondary-color);
+    font-size: 1.2em;
+    color: #555;
 }
 
 /* Testimonials Grid */
 .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    position: relative;
 }
 
-/* Testimonial Card */
+/* Individual Testimonial Card */
 .testimonial-card {
-    background-color: var(--card-color);
+    flex: 1 0 30%; /* Show 3 per view by default */
+    background-color: #fff;
+    margin: 10px;
+    padding: 20px;
     border-radius: 10px;
-    padding: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--text-light);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: none; /* Hidden initially, JS will display */
 }
 
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
+/* Profile Section */
 .profile {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
 }
 
 .profile img {
@@ -77,123 +64,92 @@ body {
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--accent-color);
-    margin-right: 1rem;
+    margin-right: 15px;
 }
 
 .profile-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
+    margin: 0;
+    font-size: 1.1em;
 }
 
 .profile-info p {
-    font-size: 0.9rem;
-    color: var(--accent-color);
+    margin: 0;
+    color: #777;
+    font-size: 0.9em;
 }
 
-.quote {
-    margin-bottom: 1rem;
+/* Quote */
+.quote p {
     font-style: italic;
-    font-size: 0.95rem;
+    font-size: 1em;
+    color: #333;
 }
 
+/* Rating */
 .rating {
-    color: var(--accent-color);
-    font-size: 1rem;
+    margin-top: 10px;
+    color: #f39c12;
 }
 
 /* Navigation Buttons */
 .slider-nav {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    margin-top: 20px;
 }
 
 .nav-btn {
-    background-color: var(--secondary-color);
-    color: var(--text-light);
+    background: none;
     border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    font-size: 2em;
+    margin: 0 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #333;
+    transition: color 0.3s;
 }
 
 .nav-btn:hover {
-    background-color: var(--accent-color);
+    color: #007bff;
 }
 
 /* Scroll to Top Button */
 #scroll-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--secondary-color);
-    color: var(--text-light);
+    bottom: 30px;
+    right: 30px;
+    background-color: #007bff;
     border: none;
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
+    padding: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 1.2em;
+    display: none; /* Hidden initially */
+    z-index: 1000;
+    color: #fff;
 }
 
 #scroll-top.visible {
-    opacity: 1;
-    visibility: visible;
+    display: block;
 }
 
-#scroll-top:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.05);
-}
-
-/* Responsive Styles */
+/* Media Queries for Responsiveness */
 @media (max-width: 1024px) {
-    .testimonials-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 2rem;
-    }
-    
+    /* Show 2 testimonials at a time */
     .testimonial-card {
-        padding: 1.25rem;
+        flex: 1 0 45%;
     }
 }
 
 @media (max-width: 600px) {
-    .testimonials-grid {
-        grid-template-columns: 1fr;
+    /* Show 1 testimonial at a time */
+    .testimonial-card {
+        flex: 1 0 90%;
     }
-    
+    /* Adjust header font sizes for smaller screens */
     .header h1 {
-        font-size: 1.75rem;
+        font-size: 2em;
     }
-    
     .header p {
-        font-size: 1rem;
-    }
-    
-    body {
-        padding: 1.5rem 1rem;
-    }
-    
-    #scroll-top {
-        width: 40px;
-        height: 40px;
+        font-size: 1em;
     }
 }
